@@ -1,0 +1,28 @@
+{% extends "qdhome_base.jinja2" %}
+{% block content %}
+<table id="homes_t" class="display"> <!-- class="table table-bordered table-hover" -->
+    <thead>
+        <th>Id</th>
+        <th>Nazwa</th>
+        <th>Cena zł</th>
+        <th>Pokoje</th>
+        <th>Powierzchnia m2</th>
+        <th>Cena za metr zl/m2</th>
+        <th>Dzielnica</th>
+    </thead>
+    <tbody>
+        {% for item in homes %}
+            <tr>
+                <th>{{ item.id }}</th>
+                <th><a href="{{ item.desc_url }}">{{ item.title }}</a></th>
+                <th>{{ item.price }}</th>
+                <th>{{ item.rooms }}</th>
+                <th>{{ item.area }}</th>
+                <th>{{ item.m_price }}</th>
+                <th>{{ item.district }}</th>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
+

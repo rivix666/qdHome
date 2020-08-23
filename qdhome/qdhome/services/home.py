@@ -1,22 +1,26 @@
-from sqlalchemy import (
-    Column,
-    Index,
-    Integer,
-    Text,
-    Unicode,
-    Float
-)
+import logging
+from qdhome.models.home import Home
+from pyramid.response import Response
+from sqlalchemy.exc import DBAPIError
+from od_scraper import od_scraper
 
-from .meta import Base
+class HomeService:
+    log = logging.getLogger(__name__)
 
+    @classmethod
+    def by_id(cls, _id, request):
+        try:
+            query = request.dbsession.query(Home)
+            return query.filter(Home.id == _id).first()
+        except DBAPIError as e:
+            cls.log.critical(e)
+            return None
 
-class Home(Base):
-    __tablename__ = 'home'
-    id = Column(Integer, primary_key=True)
-    title = Column(Unicode)
-    price = Column(Integer)
-    rooms = Column(Integer)
-    area = Column(Float)
-    m_price = Column(Integer)
-    district = Column(Unicode)
-    desc_url = Column(Text)
+    @classmethod
+    def dict_all_debug(cls, request):
+        try:
+            query = request.dbsession.query(Home)
+        except DBAPIError as e:
+            cls.log.critical(e)
+            return None
+        return query

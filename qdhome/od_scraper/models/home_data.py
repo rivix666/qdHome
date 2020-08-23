@@ -22,12 +22,15 @@ class HomeData:
                 f"Url:         {self.__desc_url}\n"
                 f"-----------------------------")
 
+    # TODO this two methods sometimes read wrongly the data
+    # I should change it to regexp
     @classmethod
     def find_int_in_str(cls, value):
         """ Finds integer in string """
         tmp = value.strip()
         numbers = [s for s in tmp.split() if s.isdigit()]
-        return int("".join(numbers))
+        num_str = "".join(numbers)
+        return int(num_str) if num_str else -1
 
     @classmethod
     def find_float_in_str(cls, value):
@@ -35,7 +38,8 @@ class HomeData:
         tmp = value.strip()
         tmp = tmp.replace(",", " ")
         numbers = [s for s in tmp.split() if s.isdigit()]
-        return float(".".join(numbers))
+        num_str = ".".join(numbers)
+        return float(num_str) if num_str else -1.0
 
     @property
     def title(self):

@@ -1,10 +1,12 @@
+""" DEPRECATED """
+
 import argparse
 import sys
 
 from pyramid.paster import bootstrap, setup_logging
 from sqlalchemy.exc import OperationalError
 
-from .. import models
+from qdhome import models
 
 
 def setup_models(dbsession):
@@ -12,7 +14,7 @@ def setup_models(dbsession):
     Add or update models / fixtures in the database.
 
     """
-    model = models.models.MyModel(name='one', value=1)
+    model = models.home.Home()
     dbsession.add(model)
 
 
