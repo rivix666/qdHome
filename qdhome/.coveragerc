@@ -1,0 +1,3 @@
+[run]
+source = qdhome
+omit = qdhome/test*
