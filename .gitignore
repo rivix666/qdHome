@@ -24,6 +24,19 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+*.pyc
+*$py.class
+build/
+dist/
+*~
+env*/
+tmp/
+Data.fs*
+*.sublime-project
+*.sublime-workspace
+.*.sw?
+.sw?
+.DS_Store
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -43,9 +56,11 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+coverage
 *.cover
 .hypothesis/
 .pytest_cache/
+test
 
 # Translations
 *.mo
