@@ -52,7 +52,7 @@ def soup_last_page(url):
 
 def return_page_home_data(page_url):
     items = soup_gather_homes(page_url)
-    return [soup_gather_home_data(it) for it in items]
+    return [soup_gather_home_data(it) for it in items] # TODO very often we got here NoneType exception
 
 
 def return_home_generator():

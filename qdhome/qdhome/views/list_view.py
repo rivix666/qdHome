@@ -4,9 +4,9 @@ from od_scraper import od_scraper
 
 from sqlalchemy.exc import DBAPIError
 
-from qdhome.services.home import HomeService
+from qdhome.services.s_home import HomeService
 
-@view_config(route_name='qdhome_index', renderer='../templates/qdhome_index.jinja2')
+@view_config(route_name='qd_home', renderer='../templates/qd_index.jinja2')
 def qdhome_index(request):
     homes = HomeService.dict_all_debug(request)
     if homes:
