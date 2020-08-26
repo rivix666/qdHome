@@ -55,9 +55,9 @@ def return_page_home_data(page_url):
     return [soup_gather_home_data(it) for it in items] # TODO very often we got here NoneType exception
 
 
-def return_home_generator():
-    last_page = soup_last_page(const.MAIN_URL)
+def return_home_generator(url):
+    last_page = soup_last_page(url)
 
     # Create Generator Expression
-    return (return_page_home_data(f"{const.MAIN_URL}{const.PAGE_PARAM}{num}") for num in range(1, last_page))
+    return (return_page_home_data(f"{url}{const.PAGE_PARAM}{num}") for num in range(1, last_page))
 

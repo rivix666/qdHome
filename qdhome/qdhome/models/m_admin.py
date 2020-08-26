@@ -10,7 +10,7 @@ from sqlalchemy import (
 from qdhome.models.meta import Base
 
 
-class DbMgrUpdate(Base):
+class AdminSettings(Base):
     __tablename__ = 'dbmgr_update_settings'
     id = Column(Integer, primary_key=True)
     first_url = Column(Text)

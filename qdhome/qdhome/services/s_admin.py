@@ -1,17 +1,16 @@
 import logging
-from qdhome.models.m_dbmgr import DbMgrUpdate
-from pyramid.response import Response
+from qdhome.models.m_admin import AdminSettings
 from sqlalchemy.exc import DBAPIError
 from od_scraper import od_scraper, const
 
-# TODO too long name
-class DbMgrUpdateService:
+
+class AdminSettingsService:
     log = logging.getLogger(__name__)
 
     @classmethod
     def clear_db(cls, request):
         try:
-            request.dbsession.query(DbMgrUpdate).delete()
+            request.dbsession.query(AdminSettings).delete()
         except DBAPIError as e:
             cls.log.critical(e)
 
@@ -25,7 +24,7 @@ class DbMgrUpdateService:
     @classmethod
     def find_first(cls, request):
         try:
-            query = request.dbsession.query(DbMgrUpdate)
+            query = request.dbsession.query(AdminSettings)
             return query.first()
         except DBAPIError as e:
             cls.log.critical(e)
@@ -33,7 +32,7 @@ class DbMgrUpdateService:
 
     @classmethod
     def prepare_default(cls, request):
-        entry = DbMgrUpdate()
+        entry = AdminSettings()
         entry.first_url = const.MAIN_URL
         entry.range_from = 1
         entry.range_to = 0
@@ -43,7 +42,7 @@ class DbMgrUpdateService:
     @classmethod
     def update_by_id(cls, request, _id, data):
         try:
-            query = request.dbsession.query(DbMgrUpdate)
+            query = request.dbsession.query(AdminSettings)
             item = query.filter(Home.id == _id).first()
             item.first_url = data.first_url
             item.range_from = data.range_from

@@ -1,0 +1,17 @@
+{% extends "qd_base.jinja2" %}
+{% block content %}
+<main class="container">
+
+    <div class="row">
+        <div class="col">
+            {{ message }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <p><a href="{{ request.route_url('qd_admin', action=edit) }}">Go Back</a></p>
+        </div>
+    </div>
+
+</main>
+{% endblock %}
