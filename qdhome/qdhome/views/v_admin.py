@@ -22,7 +22,6 @@ class AdminView:
                  renderer='../templates/qd_admin.jinja2')
     def admin_panel(self):
         entry = AdminSettingsService.find_first(self.request)
-        entry = entry if entry else AdminSettingsService.prepare_default(self.request)
         form = AdminPanelForm(self.request.POST, entry)
 
         if self.request.method == 'POST' and form.validate():
