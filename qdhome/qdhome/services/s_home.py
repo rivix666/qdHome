@@ -5,6 +5,7 @@ from pyramid.response import Response
 from sqlalchemy.exc import DBAPIError
 from od_scraper import od_scraper, const
 
+
 class HomeService:
     log = logging.getLogger(__name__)
 

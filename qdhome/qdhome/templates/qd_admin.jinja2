@@ -1,69 +1,138 @@
 {% extends "qd_base.jinja2" %}
 {% block content %}
 <main class="container">
-    <form action="{{request.route_url('qd_admin', action=action)}}" method="post" class="form">
 
+    <!-- Scraper settings -->
+    <section class="scraper_settings">
+        <h1>Scraper settings:</h1>
+        <hr/>
+        <form action="{{request.route_url('qd_admin', action=action)}}" method="post" class="form">
+
+            <!-- First page url -->
+            <div class="row">
+                <div class="col">
+                    {% for error in form.first_url.errors %}
+                    <div class="error_msg">{{ error }}</div>
+                    {% endfor %}
+
+                    <div class="form-group">
+                        <label for="first_url">{{ form.first_url.label }}</label>
+                        {{ form.first_url(class_='form-control') }}
+                    </div>
+                </div>
+            </div>
+            <!-- end of First page url -->
+
+            <!-- Range -->
+            <div class="row">
+                <div class="col">
+                    {% for error in form.range_from.errors %}
+                    <div class="error_msg">{{ error }}</div>
+                    {% endfor %}
+
+                    <div class="form-group">
+                        <label for="range_from">{{ form.range_from.label }}</label>
+                        {{ form.range_from(class_='form-control') }}
+                    </div>
+                </div>
+                <div class="col">
+                    {% for error in form.range_to.errors %}
+                    <div class="error_msg">{{ error }}</div>
+                    {% endfor %}
+
+                    <div class="form-group">
+                        <label for="range_to">{{ form.range_to.label }}</label>
+                        {{ form.range_to(class_='form-control') }}
+                    </div>
+                </div>
+            </div>
+            <!-- end of Range -->
+
+            <!-- Emails -->
+            <hr/>
+            <div class="row">
+                <div class="col">
+                    {% for error in form.should_email.errors %}
+                    <div class="error_msg">{{ error }}</div>
+                    {% endfor %}
+
+                    <div class="form-group">
+                        <label for="should_email"> {{ form.should_email.label }}</label>
+                        {{ form.should_email(class_='form-control') }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {% for error in form.info_email.errors %}
+                    <div class="error_msg">{{ error }}</div>
+                    {% endfor %}
+
+                    <div class="form-group">
+                        <label for="info_email">{{ form.info_email.label }}</label>
+                        {{ form.info_email(class_='form-control') }}
+                    </div>
+                </div>
+                <div class="col">
+                    {% for error in form.info_keywords.errors %}
+                    <div class="error_msg">{{ error }}</div>
+                    {% endfor %}
+
+                    <div class="form-group">
+                        <label for="info_keywords">{{ form.info_keywords.label }}</label>
+                        {{ form.info_keywords(class_='form-control') }}
+                    </div>
+                </div>
+            </div>
+            <!-- end of Emails -->
+
+            <!-- Submit -->
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default def_btn">Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- end of Submit -->
+
+        </form>
+    </section>
+    <!-- end of Scraper settings -->
+
+    <!-- Run scraper -->
+    <section class="run_scraper">
+        <h1>Run scraper:</h1>
+        <hr/>
         <div class="row">
+
+            <!-- Clear Db Button -->
             <div class="col">
-                {% for error in form.first_url.errors %}
-                <div class="error">{{ error }}</div>
-                {% endfor %}
-
-                <div class="form-group">
-                    <label for="first_url">{{ form.first_url.label }}</label>
-                    {{ form.first_url(class_='form-control') }}
-                </div>
+                <p><a href="{{ request.route_url('qd_admin', action='clear') }}">
+                    <button class="btn btn-default def_btn">Clear Db</button>
+                </a></p>
             </div>
-        </div>
 
-        <div class="row">
+            <!-- Rebuild Db Button -->
             <div class="col">
-                {% for error in form.range_from.errors %}
-                <div class="error">{{ error }}</div>
-                {% endfor %}
-
-                <div class="form-group">
-                    <label for="range_from">{{ form.range_from.label }}</label>
-                    {{ form.range_from(class_='form-control') }}
-                </div>
+                <p><a href="{{ request.route_url('qd_admin', action='rebuild') }}">
+                    <button class="btn btn-default def_btn">Rebuild Db</button>
+                </a></p>
             </div>
-            <div class="col">
-                {% for error in form.range_to.errors %}
-                <div class="error">{{ error }}</div>
-                {% endfor %}
 
-                <div class="form-group">
-                    <label for="range_to">{{ form.range_to.label }}</label>
-                    {{ form.range_to(class_='form-control') }}
-                </div>
-            </div>
         </div>
+    </section>
+    <!-- end of Run scraper -->
 
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label></label>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </div>
-            </div>
-        </div>
-
-    </form>
-
-    <div class="row">
-        <div class="col">
-            <p><a href="{{ request.route_url('qd_admin', action='clear') }}">Clear Db</a></p>
-        </div>
-        <div class="col">
-            <p><a href="{{ request.route_url('qd_admin', action='rebuild') }}">Rebuild Db</a></p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <p><a href="{{ request.route_url('qd_home') }}">Go Back</a></p>
-        </div>
-    </div>
+    <!-- Go back -->
+    <section class="go_back">
+        <hr/>
+        <p><a href="{{ request.route_url('qd_home') }}">
+            <button class="btn btn-default def_btn">Go Back</button>
+        </a></p>
+    </section>
+    <!-- end of Go back -->
 
 </main>
 {% endblock %}

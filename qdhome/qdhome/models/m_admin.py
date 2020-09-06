@@ -4,7 +4,8 @@ from sqlalchemy import (
     Integer,
     Text,
     Unicode,
-    Float
+    Float,
+    Boolean
 )
 
 from qdhome.models.meta import Base
@@ -16,3 +17,6 @@ class AdminSettings(Base):
     first_url = Column(Text)
     range_from = Column(Integer)
     range_to = Column(Integer)
+    info_email = Column(Text)
+    should_email = Column(Boolean)
+    info_keywords = Column(Text)

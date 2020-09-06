@@ -4,6 +4,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <title>QdHome</title>
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -12,7 +13,13 @@
         <!-- DataTable CSS -->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
 
-        <title>QdHome</title>
+        <!-- Internal CSS -->
+        <link rel="stylesheet" href="{{ request.static_url('qdhome:static/css/default.css') }}" >
+        <link rel="stylesheet" href="{{ request.static_url('qdhome:static/css/admin.css') }}" >
+
+        <!-- Favicons -->
+        <link rel="shortcut icon" href="{{ request.static_url('qdhome:static/images/favicon.png') }}" >
+
     </head>
     <body>
         <!-- NavBar -->
@@ -57,18 +64,12 @@
 
         <!-- DataTable scripts -->
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
-        <script>
-            $(document).ready( function () {
-                $('#homes_t').DataTable( {
-                    "pageLength": 100,
-                    "lengthMenu": [ 50, 100, 250, 500 ]
-                } );
-            } );
-        </script>
+
+        <!-- Internal JS -->
+        <script type="text/javascript" charset="utf8" src="{{ request.static_url('qdhome:static/js/init.js') }}"></script>
+
     </body>
     <footer>
-        <div style="height: 50px;">
-            <center>Copyright Qd Company</center>
-        </div>
+        <center>Copyright Qd Company</center>
     </footer>
 </html>
