@@ -11,17 +11,17 @@ def strip_filter(x):
 
 class AdminPanelForm(Form):
     # Scrap settings
-    first_url = StringField('First page url:', [validators.InputRequired(), validators.Length(min=1, max=255)],
+    first_url = StringField('First page url', [validators.InputRequired(), validators.Length(min=1, max=255)],
                             filters=[strip_filter], default=const.MAIN_URL)
-    range_from = IntegerField("Range from:", [validators.InputRequired(), validators.NumberRange(min=1, max=1000)],
+    range_from = IntegerField("Range from", [validators.InputRequired(), validators.NumberRange(min=1, max=1000)],
                               default=1)
-    range_to = IntegerField("Range to:", [validators.NumberRange(min=0, max=1000)],
+    range_to = IntegerField("Range to", [validators.NumberRange(min=0, max=1000)],
                             default=0)
 
     # Email settings
-    info_email = StringField('Email to inform:', [validators.Email()], filters=[strip_filter])
-    should_email = BooleanField('Inform about new offers:', default=False)
-    info_keywords = StringField('Inform offers keywords:', filters=[strip_filter])
+    info_email = StringField('Email to inform', [validators.Email()], filters=[strip_filter])
+    should_email = BooleanField('Inform about new offers', default=False)
+    info_keywords = StringField('Inform offers keywords', filters=[strip_filter])
 
     # Custom validator of whole form
     def validate(self):

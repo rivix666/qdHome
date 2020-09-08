@@ -8,6 +8,7 @@ import pyramid.httpexceptions as exc
 
 from qdhome.models.m_home import Home
 from qdhome.services.s_home import HomeService
+from qdhome.models.m_admin import AdminSettings
 from qdhome.services.s_admin import AdminSettingsService
 from qdhome.forms.f_admin import AdminPanelForm
 
@@ -24,7 +25,11 @@ class AdminView:
         entry = AdminSettingsService.find_first(self.request)
         form = AdminPanelForm(self.request.POST, entry)
 
+        # I don't know why WTForm doesn't set checkbox as checked, that's why I need to do this manually
+        form.should_email.checked = entry.should_email if entry else False;
+
         if self.request.method == 'POST' and form.validate():
+            entry = entry if entry else self.__init_admin_settings()
             form.populate_obj(entry)
             return HTTPFound(location=self.request.route_url('qd_admin', action='edit'))
 
@@ -45,3 +50,8 @@ class AdminView:
             return {"message": "Db Cleared"}
         else:
             return {"message": "Something goes wrong - 500"}
+
+    def __init_admin_settings(self):
+        entry = AdminSettings()
+        AdminSettingsService.insert_db(self.request, obj=entry)
+        return entry

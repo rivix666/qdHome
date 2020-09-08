@@ -9,97 +9,60 @@
         <form action="{{request.route_url('qd_admin', action=action)}}" method="post" class="form">
 
             <!-- First page url -->
-            <div class="row">
-                <div class="col">
-                    {% for error in form.first_url.errors %}
-                    <div class="error_msg">{{ error }}</div>
-                    {% endfor %}
-
-                    <div class="form-group">
-                        <label for="first_url">{{ form.first_url.label }}</label>
-                        {{ form.first_url(class_='form-control') }}
-                    </div>
-                </div>
+            <div class="form-group">
+                <label for="first_url">{{ form.first_url.label }}</label>
+                {{ form.first_url(class_='form-control') }}
             </div>
-            <!-- end of First page url -->
 
             <!-- Range -->
-            <div class="row">
-                <div class="col">
-                    {% for error in form.range_from.errors %}
-                    <div class="error_msg">{{ error }}</div>
-                    {% endfor %}
-
-                    <div class="form-group">
-                        <label for="range_from">{{ form.range_from.label }}</label>
-                        {{ form.range_from(class_='form-control') }}
-                    </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="range_from">{{ form.range_from.label }}</label>
+                    {{ form.range_from(class_='form-control') }}
                 </div>
-                <div class="col">
-                    {% for error in form.range_to.errors %}
-                    <div class="error_msg">{{ error }}</div>
-                    {% endfor %}
-
-                    <div class="form-group">
-                        <label for="range_to">{{ form.range_to.label }}</label>
-                        {{ form.range_to(class_='form-control') }}
-                    </div>
+                <div class="form-group col-md-6">
+                    <label for="range_to">{{ form.range_to.label }}</label>
+                    {{ form.range_to(class_='form-control') }}
                 </div>
             </div>
-            <!-- end of Range -->
 
             <!-- Emails -->
             <hr/>
-            <div class="row">
-                <div class="col">
-                    {% for error in form.should_email.errors %}
-                    <div class="error_msg">{{ error }}</div>
-                    {% endfor %}
-
-                    <div class="form-group">
-                        <label for="should_email"> {{ form.should_email.label }}</label>
-                        {{ form.should_email(class_='form-control') }}
-                    </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="info_email">{{ form.info_email.label }}</label>
+                    {{ form.info_email(class_='form-control') }}
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="info_keywords">{{ form.info_keywords.label }}</label>
+                    {{ form.info_keywords(class_='form-control') }}
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    {% for error in form.info_email.errors %}
-                    <div class="error_msg">{{ error }}</div>
-                    {% endfor %}
-
-                    <div class="form-group">
-                        <label for="info_email">{{ form.info_email.label }}</label>
-                        {{ form.info_email(class_='form-control') }}
-                    </div>
-                </div>
-                <div class="col">
-                    {% for error in form.info_keywords.errors %}
-                    <div class="error_msg">{{ error }}</div>
-                    {% endfor %}
-
-                    <div class="form-group">
-                        <label for="info_keywords">{{ form.info_keywords.label }}</label>
-                        {{ form.info_keywords(class_='form-control') }}
-                    </div>
+            <div class="form-group">
+                <div class="form-check">
+                    {{ form.should_email(class_='form-check-input') }}
+                    <label class="form-check-label" for="should_email"> {{ form.should_email.label }}</label>
                 </div>
             </div>
-            <!-- end of Emails -->
 
             <!-- Submit -->
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-default def_btn">Submit
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!-- end of Submit -->
+            <button type="submit" class="btn btn-primary">Submit</button>
 
         </form>
     </section>
     <!-- end of Scraper settings -->
+
+    <!-- Errors -->
+    {% if form.errors %}
+    <section class="section_errors text-danger">
+        <h1>Errors:</h1>
+        <hr/>
+        {% for field, errors in form.errors.items() %}
+            <b>{{ loop.index0 + 1 }}. {{ form[field].label }}:</b> {{ ', '.join(errors) }}<br>
+        {% endfor %}
+    </section>
+    {% endif %}
+    <!-- end of Errors -->
 
     <!-- Run scraper -->
     <section class="run_scraper">
@@ -110,14 +73,14 @@
             <!-- Clear Db Button -->
             <div class="col">
                 <p><a href="{{ request.route_url('qd_admin', action='clear') }}">
-                    <button class="btn btn-default def_btn">Clear Db</button>
+                    <button class="btn btn-danger">Clear Db</button>
                 </a></p>
             </div>
 
             <!-- Rebuild Db Button -->
             <div class="col">
                 <p><a href="{{ request.route_url('qd_admin', action='rebuild') }}">
-                    <button class="btn btn-default def_btn">Rebuild Db</button>
+                    <button class="btn btn-primary">Rebuild Db</button>
                 </a></p>
             </div>
 
@@ -129,7 +92,7 @@
     <section class="go_back">
         <hr/>
         <p><a href="{{ request.route_url('qd_home') }}">
-            <button class="btn btn-default def_btn">Go Back</button>
+            <button class="btn btn-primary">Go Back</button>
         </a></p>
     </section>
     <!-- end of Go back -->
