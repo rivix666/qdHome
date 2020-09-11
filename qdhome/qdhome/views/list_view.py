@@ -8,7 +8,7 @@ from qdhome.services.s_home import HomeService
 
 @view_config(route_name='qd_home', renderer='../templates/qd_index.jinja2')
 def qdhome_index(request):
-    homes = HomeService.dict_all_debug(request)
+    homes = HomeService.dict_all_debug(request.dbsession)
     if homes:
         return {"homes": homes}
     else:

@@ -12,5 +12,15 @@ NAMING_CONVENTION = {
     "pk": "pk_%(table_name)s"
 }
 
+# We can use db session as global variable
+# More Info https://docs.pylonsproject.org/projects/pyramid-cookbook/en/latest/database/sqlalchemy.html
+# from sqlalchemy.orm import (
+#     scoped_session,
+#     sessionmaker,
+#     )
+# from zope.sqlalchemy import register
+# DBSession = scoped_session(sessionmaker(autoflush=False))
+# register(DBSession)
+
 metadata = MetaData(naming_convention=NAMING_CONVENTION)
 Base = declarative_base(metadata=metadata)

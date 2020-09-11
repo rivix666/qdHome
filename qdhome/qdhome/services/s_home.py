@@ -1,7 +1,6 @@
 import logging
 from qdhome.models.m_home import Home
 from qdhome.services.s_admin import AdminSettingsService
-from pyramid.response import Response
 from sqlalchemy.exc import DBAPIError
 from od_scraper import od_scraper, const
 
@@ -10,9 +9,9 @@ class HomeService:
     log = logging.getLogger(__name__)
 
     @classmethod
-    def clear_db(cls, request):
+    def clear_db(cls, dbsession):
         try:
-            request.dbsession.query(Home).delete()
+            dbsession.query(Home).delete()
         except DBAPIError as e:
             cls.log.critical(e)
             return False
@@ -20,53 +19,59 @@ class HomeService:
             return True
 
     @classmethod
-    def rebuild_db(cls, request):
+    def get_all_url_list(cls, dbsession):
         try:
-            query = AdminSettingsService.find_first(request)
+            query = AdminSettingsService.find_first(dbsession)
             url = query.first_url if query else const.MAIN_URL
-            generator = od_scraper.return_home_generator(url)
+            return od_scraper.return_home_pages_list(url)
         except BaseException as e:
             cls.log.critical(e)
-            return False
-
-        # TODO add another thread
-        counter = 1
-        for data in generator:
-            print(counter)
-            counter += 1
-            for it in data:
-                try:
-                    query = request.dbsession.query(Home)
-                    found = query.filter(Home.desc_url == it.desc_url).first()
-                except DBAPIError:
-                    return Response(e, content_type='text/plain', status=500)
-
-                if not found:
-                    new_home = Home(title=it.title
-                                    , price=it.price
-                                    , rooms=it.rooms
-                                    , area=it.area
-                                    , m_price=it.m_price
-                                    , district=it.district
-                                    , desc_url=it.desc_url)
-                    request.dbsession.add(new_home)
-                    request.dbsession.flush()
-
-        return True
+            return None
 
     @classmethod
-    def by_id(cls, _id, request):
+    def get_all_url_generator(cls, dbsession):
         try:
-            query = request.dbsession.query(Home)
+            query = AdminSettingsService.find_first(dbsession)
+            url = query.first_url if query else const.MAIN_URL
+            return od_scraper.return_home_generator(url)
+        except BaseException as e:
+            cls.log.critical(e)
+            return None
+
+    @classmethod
+    def scrap_url_and_update_db(cls, url, dbsession):
+        data = od_scraper.return_page_home_data(url)
+        for it in data:
+            try:
+                found = dbsession.query(Home).filter(Home.desc_url == it.desc_url).first()
+            except DBAPIError as e:
+                cls.log.critical(e)
+                return
+
+            if not found:
+                new_home = Home(title=it.title
+                                , price=it.price
+                                , rooms=it.rooms
+                                , area=it.area
+                                , m_price=it.m_price
+                                , district=it.district
+                                , desc_url=it.desc_url)
+                dbsession.add(new_home)
+                dbsession.flush()  # TODO probably unnecessary
+
+    @classmethod
+    def by_id(cls, _id, dbsession):
+        try:
+            query = dbsession.query(Home)
             return query.filter(Home.id == _id).first()
         except DBAPIError as e:
             cls.log.critical(e)
             return None
 
     @classmethod
-    def dict_all_debug(cls, request):
+    def dict_all_debug(cls, dbsession):
         try:
-            query = request.dbsession.query(Home)
+            query = dbsession.query(Home)
         except DBAPIError as e:
             cls.log.critical(e)
             return None

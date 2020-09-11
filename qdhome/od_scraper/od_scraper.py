@@ -61,3 +61,7 @@ def return_home_generator(url):
     # Create Generator Expression
     return (return_page_home_data(f"{url}{const.PAGE_PARAM}{num}") for num in range(1, last_page))
 
+
+def return_home_pages_list(url):
+    last_page = soup_last_page(url)
+    return [f"{url}{const.PAGE_PARAM}{num}" for num in range(1, last_page)]

@@ -12,6 +12,8 @@ from qdhome.models.m_admin import AdminSettings
 from qdhome.services.s_admin import AdminSettingsService
 from qdhome.forms.f_admin import AdminPanelForm
 
+from qdhome.celery import test_task2
+
 
 # TODO clean this shit up
 class AdminView:
@@ -38,7 +40,7 @@ class AdminView:
     @view_config(route_name='qd_admin', match_param='action=clear',
                  renderer='../templates/qd_admin_message.jinja2')
     def admin_clear_db(self):
-        if HomeService.clear_db(self.request):
+        if HomeService.clear_db(self.request.dbsession):
             return {"message": "Db Cleared"}
         else:
             return {"message": "Something goes wrong - 500"}
@@ -46,12 +48,14 @@ class AdminView:
     @view_config(route_name='qd_admin', match_param='action=rebuild',
                  renderer='../templates/qd_admin_message.jinja2')
     def admin_rebuild_db(self):
-        if HomeService.rebuild_db(self.request):
-            return {"message": "Db Cleared"}
+        result = True # TODO clean this
+        test_task2.delay()
+        if result:
+            return {"message": "Db Rebuilded"}
         else:
             return {"message": "Something goes wrong - 500"}
 
     def __init_admin_settings(self):
         entry = AdminSettings()
-        AdminSettingsService.insert_db(self.request, obj=entry)
+        AdminSettingsService.insert_db(self.request.dbsession, obj=entry)
         return entry

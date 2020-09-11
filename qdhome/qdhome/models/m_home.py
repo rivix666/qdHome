@@ -1,3 +1,4 @@
+from qdhome.models.meta import Base
 from sqlalchemy import (
     Column,
     Index,
@@ -6,8 +7,6 @@ from sqlalchemy import (
     Unicode,
     Float
 )
-
-from qdhome.models.meta import Base
 
 
 class Home(Base):

@@ -123,6 +123,8 @@ venv.bak/
 
 # qdHome
 *.sqlite
+*.sqlite-journal
+qdhome/qdhome/alembic/versions
 
 #  Others
 *.lnk
